@@ -37,7 +37,7 @@ class CoordinateExtractor(FeatureExtractor):
         feats = Helpers.util.Counter()
         feats[state] = 1.0
         feats['x=%d' % state[0]] = 1.0
-        feats['y=%d' % state[0]] = 1.0
+        feats['y=%d' % state[1]] = 1.0
         feats['action=%s' % action] = 1.0
         return feats
 

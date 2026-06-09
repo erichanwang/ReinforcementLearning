@@ -46,12 +46,12 @@ class QLearningAgent(ReinforcementAgent):
         
 
     def getQValue(self, state, action):
-        action = action.capitalize()
         """
           Returns the Q-value of the (state,action) pair.
           Should return 0 if we have never seen the state,
           and initialize that state in the Q-Table.
         """
+        action = action.capitalize()
         if state not in self.qVals:
             self.qVals[state] = {}
         if action not in self.qVals[state]:
@@ -103,7 +103,7 @@ class QLearningAgent(ReinforcementAgent):
         action = None
 
         probability = random.random()
-        if probability > self.epsilon:
+        if probability < self.epsilon:
             action = random.choice(legalActions) if legalActions else None
         else:
             action = self.computeActionFromQValues(state)
@@ -111,13 +111,13 @@ class QLearningAgent(ReinforcementAgent):
 
 
     def update(self, state, action, nextState, reward):
-        action = action.capitalize()
         """
           You should do your Q-Value updates here.
 
           NOTE: You should never call this function,
           it will be called for you.
         """
+        action = action.capitalize()
         
         #bellman equation to update q values
         qValue = self.getQValue(state, action)
