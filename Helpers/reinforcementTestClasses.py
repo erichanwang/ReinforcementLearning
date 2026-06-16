@@ -268,10 +268,7 @@ class ApproximateQLearningTest(Helpers.testClasses.TestCase):
         maxPreExperiences = 10
         self.numsExperiencesForDisplay = list(range(min(numExperiences, maxPreExperiences)))
         self.testOutFile = testDict['test_out_file']
-        if sys.platform == 'win32':
-            _, question_name, test_name = testDict['test_out_file'].split('\\')
-        else:
-            _, question_name, test_name = testDict['test_out_file'].split('/')
+        test_name = os.path.basename(testDict['test_out_file'])
         self.experiences = Experiences(test_name.split('.')[0])
         if maxPreExperiences < numExperiences:
             self.numsExperiencesForDisplay.append(numExperiences)
@@ -335,7 +332,7 @@ class ApproximateQLearningTest(Helpers.testClasses.TestCase):
         return True
 
     def runAgent(self, moduleDict, numExperiences):
-        agent = moduleDict['qlearningAgents'].ApproximateQAgent(extractor=self.extractor, **self.opts)
+        agent = moduleDict['Exercises/qlearningAgents'].ApproximateQAgent(extractor=self.extractor, **self.opts)
         states = [state for state in self.grid.getStates() if len(self.grid.getPossibleActions(state)) > 0]
         states.sort()
         lastExperience = None
@@ -427,10 +424,7 @@ class QLearningTest(Helpers.testClasses.TestCase):
         maxPreExperiences = 10
         self.numsExperiencesForDisplay = list(range(min(numExperiences, maxPreExperiences)))
         self.testOutFile = testDict['test_out_file']
-        if sys.platform == 'win32':
-            _, question_name, test_name = testDict['test_out_file'].split('\\')
-        else:
-            _, question_name, test_name = testDict['test_out_file'].split('/')
+        test_name = os.path.basename(testDict['test_out_file'])
         self.experiences = Experiences(test_name.split('.')[0])
         if maxPreExperiences < numExperiences:
             self.numsExperiencesForDisplay.append(numExperiences)
@@ -609,10 +603,7 @@ class EpsilonGreedyTest(Helpers.testClasses.TestCase):
         self.numExperiences = int(testDict['numExperiences'])
         self.numIterations = int(testDict['iterations'])
         self.opts = {'actionFn': self.env.getPossibleActions, 'epsilon': self.epsilon, 'gamma': self.discount, 'alpha': self.learningRate}
-        if sys.platform == 'win32':
-            _, question_name, test_name = testDict['test_out_file'].split('\\')
-        else:
-            _, question_name, test_name = testDict['test_out_file'].split('/')
+        test_name = os.path.basename(testDict['test_out_file'])
         self.experiences = Experiences(test_name.split('.')[0])
 
     def execute(self, grades, moduleDict, solutionDict):
@@ -712,7 +703,7 @@ class EvalAgentTest(Helpers.testClasses.TestCase):
         self.addMessage('Grading agent using command:  python pacman.py %s'% (self.pacmanParams,))
 
         startTime = time.time()
-        games = pacman.runGames(** Helpers.pacman.readCommand(self.pacmanParams.split(' ')))
+        games = pacman.runGames(**pacman.readCommand(self.pacmanParams.split(' ')))
         totalTime = time.time() - startTime
         numGames = len(games)
 

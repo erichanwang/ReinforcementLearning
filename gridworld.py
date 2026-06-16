@@ -263,6 +263,7 @@ class Grid:
         return str(self._getLegacyText())
 
 def makeGrid(gridString):
+    gridString = [row for row in gridString if row]  # skip empty rows from triple-quoted strings
     width, height = len(gridString[0]), len(gridString)
     grid = Grid(width, height)
     for ybar, line in enumerate(gridString):
